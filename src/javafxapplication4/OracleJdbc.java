@@ -20,14 +20,18 @@ import java.util.Properties;
 public class OracleJdbc {
     
     public static boolean DEBUG = true;
-    private final static String url = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
+    private final static String URL = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
     
     public OracleJdbc() {
         
     }
     
     public void validateLogin(String username, String password) {
-        
+        try{
+            connect();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
     
     public void connect() throws SQLException{
@@ -35,17 +39,20 @@ public class OracleJdbc {
         props.setProperty("user", "Lecture");
         props.setProperty("password", "Lecture");
         
-        if(DEBUG) System.out.println(" DEBUG url=" + url);
+        if(DEBUG) System.out.println(" DEBUG url=" + URL);
         if(DEBUG) System.out.println(" DEBUG Usernamre=" + props.getProperty("user") );
-        if(DEBUG) System.out.println(" DEBUG Password=" + props.getProperty("password") );     
+        if(DEBUG) System.out.println(" DEBUG Password=" + props.getProperty("password") );    
+        
         //creating connection to Oracle database using JDBC
-        Connection conn = DriverManager.getConnection(url,props);
+        Connection conn = DriverManager.getConnection(URL,props);
 
         String sql ="select sysdate as current_day from dual";
 
         //creating PreparedStatement object to execute query
         PreparedStatement preStatement = conn.prepareStatement(sql);
+        
         if(DEBUG) System.out.println(" DEBUG: Display result of SQL=" + sql);
+        
         displayResultSet(preStatement.executeQuery());
 
 
