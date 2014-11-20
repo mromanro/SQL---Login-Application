@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="javafxapplication4.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication4.FXMLDocumentController">
     <children>
       <GridPane layoutX="1.0" prefHeight="200.0" prefWidth="321.0">
         <columnConstraints>
@@ -24,8 +24,8 @@
             <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="usernameField" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="passwordField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="usernameField" onKeyPressed="#handleKeyPressed" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="passwordField" onKeyPressed="#handleKeyPressed" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
               <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" minHeight="16" minWidth="69" prefHeight="30.0" prefWidth="209.0" text="Database Team 4" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
