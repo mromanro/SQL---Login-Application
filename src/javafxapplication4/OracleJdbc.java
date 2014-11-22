@@ -21,18 +21,34 @@ public class OracleJdbc {
     
     public static boolean DEBUG = true;
     private final static String URL = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
+    private Connection conn;
     
     public OracleJdbc() {
         
     }
     
-    public void validateLogin(String username, String password) {
+    public boolean validateLogin(String username, String password) {
         try{
             connect();
+            //try log in
+            disconnect();
         } catch (SQLException e){
             e.printStackTrace();
         }
+        
+        return false;
     }
+    
+    public boolean unlockAccount(String adminUsername, String adminPassword,
+                                    String accountUsername) {
+        
+        return false;
+    }
+    
+    public void disconnect() {
+        
+    }
+    
     
     public void connect() throws SQLException{
         Properties props = new Properties();
@@ -44,7 +60,7 @@ public class OracleJdbc {
         if(DEBUG) System.out.println(" DEBUG Password=" + props.getProperty("password") );    
         
         //creating connection to Oracle database using JDBC
-        Connection conn = DriverManager.getConnection(URL,props);
+        conn = DriverManager.getConnection(URL,props);
 
         String sql ="select sysdate as current_day from dual";
 
@@ -111,8 +127,6 @@ public class OracleJdbc {
               ((tempRS.getString("ForV").compareTo("F") == 0) ? "Is a Fruit" : "IS a Veggie") );
         }
         System.out.println("Out of rows in this result set");
-
-
 
     }
     

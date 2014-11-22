@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="258.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication4.UnlockGUIFXMLController">
+   <children>
+      <Label layoutX="96.0" layoutY="25.0" text="Admin Account">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="adminUserField" layoutX="78.0" layoutY="58.0" onKeyPressed="#handleKeyPressed" promptText="Username" />
+      <TextField fx:id="adminPassField" layoutX="78.0" layoutY="94.0" onKeyPressed="#handleKeyPressed" promptText="Password" />
+      <TextField fx:id="accountUserField" layoutX="78.0" layoutY="182.0" onKeyPressed="#handleKeyPressed" promptText="Username" />
+      <Button fx:id="submitButton" layoutX="131.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Unlock" />
+      <Label layoutX="84.0" layoutY="152.0" text="Account to Unlock">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="mssgLabel" alignment="CENTER" layoutY="129.0" prefHeight="16.0" prefWidth="309.0" text="Failed to unlock" textFill="RED" />
+   </children>
+</AnchorPane>

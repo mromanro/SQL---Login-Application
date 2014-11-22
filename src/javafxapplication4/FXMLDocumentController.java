@@ -5,17 +5,24 @@
  */
 package javafxapplication4;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  *
@@ -30,7 +37,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
-    private Button submitButton;
+    private Button submitButton, unlockButton;
     
     private OracleJdbc database;
     
@@ -39,6 +46,9 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource() == submitButton) {
             attemptLogin();
+        }
+        else if(event.getSource() == unlockButton) {
+            openUnlockGUI();
         }
     }
     
@@ -62,7 +72,23 @@ public class FXMLDocumentController implements Initializable {
         database = new OracleJdbc();
     }    
     
-    public void attemptLogin(){
+    private void openUnlockGUI() {
+        setMssg("Unlocking" , false);
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UnlockGUIFXML.fxml"));
+        Parent root;
+        try {
+            root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void attemptLogin(){
         String username = usernameField.getText();
         String password = passwordField.getText();
         
@@ -74,7 +100,7 @@ public class FXMLDocumentController implements Initializable {
             database.validateLogin(username, password);
     }
     
-    public void setMssg(String mssg , boolean error) {
+    private void setMssg(String mssg , boolean error) {
         if(error){
             mssgLabel.setTextFill(Color.RED);
             
