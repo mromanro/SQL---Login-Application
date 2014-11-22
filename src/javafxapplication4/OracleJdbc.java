@@ -21,36 +21,42 @@ public class OracleJdbc {
     
     public static boolean DEBUG = true;
     private final static String URL = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
-    private Connection conn;
+    private static Connection conn;
     
-    public OracleJdbc() {
-        
-    }
+    private OracleJdbc() {}
     
-    public boolean validateLogin(String username, String password) {
+    public static boolean validateLogin(String username, String password) {
         try{
             connect();
-            //try log in
+            query();
             disconnect();
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
         
-        return false;
+        return true;
     }
     
-    public boolean unlockAccount(String adminUsername, String adminPassword,
+    public static boolean unlockAccount(String adminUsername, String adminPassword,
                                     String accountUsername) {
-        
-        return false;
+        try{
+            connect();
+            query();
+            disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
     
-    public void disconnect() {
+    private static void disconnect() {
         
     }
     
     
-    public void connect() throws SQLException{
+    private static void connect() throws SQLException{
         Properties props = new Properties();
         props.setProperty("user", "Lecture");
         props.setProperty("password", "Lecture");
@@ -61,7 +67,9 @@ public class OracleJdbc {
         
         //creating connection to Oracle database using JDBC
         conn = DriverManager.getConnection(URL,props);
-
+    }
+    
+    private static void query() throws SQLException{
         String sql ="select sysdate as current_day from dual";
 
         //creating PreparedStatement object to execute query
@@ -130,71 +138,69 @@ public class OracleJdbc {
 
     }
     
-     public  void displayResultSetAttrib(ResultSet R)
-     {
+    private static void displayResultSetAttrib(ResultSet R) {
      
- // Either put you SQl in a try/catch block...or...
- // make each throw and SQL___ exception (Ex: throws SQLException)
- // use a try cathc bloc if processing in a loop and want to handle 
- // specific ettror in thier exception catch block
+        // Either put you SQl in a try/catch block...or...
+        // make each throw and SQL___ exception (Ex: throws SQLException)
+        // use a try cathc bloc if processing in a loop and want to handle 
+        // specific ettror in thier exception catch block
 
-    try
-    {
-      System.out.println(" JEZ TRYIN");
+        try {
+            System.out.println(" JEZ TRYIN");
 
- // Get the meta data of result set.
+            // Get the meta data of result set.
 
-      ResultSetMetaData resultSetMetaData = R.getMetaData();
-      System.out.println("The number of columns in ResultSet is : " + resultSetMetaData.getColumnCount());
-      System.out.println("The table name of column number 1 is : " + resultSetMetaData.getTableName(1));
+            ResultSetMetaData resultSetMetaData = R.getMetaData();
+            System.out.println("The number of columns in ResultSet is : " + resultSetMetaData.getColumnCount());
+            System.out.println("The table name of column number 1 is : " + resultSetMetaData.getTableName(1));
 
-      for(int i = 1 ;  i <= resultSetMetaData.getColumnCount() ; i++)
-      {
-          System.out.print(" Result set Entry=" + i + 
+            for(int i = 1 ;  i <= resultSetMetaData.getColumnCount() ; i++)
+            {
+                System.out.print(" Result set Entry=" + i + 
                            " Schema=" + resultSetMetaData.getSchemaName(i) +
                            " Table=" + resultSetMetaData.getTableName(i) +
                            " Name=" + resultSetMetaData.getColumnName(i) +
                            " Typr=" + resultSetMetaData.getColumnType(i) + " ..." );
-          // now sow increment method to getvalue by Unknown columns name from result set....
+                // now sow increment method to getvalue by Unknown columns name from result set....
      
-          if( R.next() )
-          System.out.println(R.getString(resultSetMetaData.getColumnName(i)) );
-      }
-    }
-    catch (SQLException e) 
-    {
-      System.out.println(" JEZ TRYIN DOUGH SQLException");
-      e.printStackTrace();
-    } 
-//    catch (ClassNotFoundException e)
-//    {
-//      System.out.println(" JEZ TRYIN DOH ClassNotFoundException");
-//      e.printStackTrace();
-//    }
-    finally 
-    {
-      System.out.println("DOH - FINALLY");
-// Finally we have close all the JDBC resources
-//     try 
-//     {
-//        if (R != null) 
-//        {
-//           R.close();
-//        }
-//        if (statement != null) 
-//        {
-//           statement.close();
-//        }
-//        if (connection != null) 
-//        {
-//           connection.close();
-//        }
-     }  // End TRY -CATCH - FINALLY examlple
- 
+                if( R.next() )
+                System.out.println(R.getString(resultSetMetaData.getColumnName(i)) );
+            }
+         }
+        catch (SQLException e) 
+        {
+            System.out.println(" JEZ TRYIN DOUGH SQLException");
+            e.printStackTrace();
+        } 
+        //    catch (ClassNotFoundException e)
+        //    {
+        //      System.out.println(" JEZ TRYIN DOH ClassNotFoundException");
+        //      e.printStackTrace();
+        //    }
+        finally 
+        {
+            System.out.println("DOH - FINALLY");
+        // Finally we have close all the JDBC resources
+        //     try 
+        //     {
+        //        if (R != null) 
+        //        {
+        //           R.close();
+        //        }
+        //        if (statement != null) 
+        //        {
+        //           statement.close();
+        //        }
+        //        if (connection != null) 
+        //        {
+        //           connection.close();
+        //        }
+        }  // End TRY -CATCH - FINALLY examlple
+        
   }  // end metod displayResultSet
 
 
-  public void displayResultSet(ResultSet R) throws SQLException
+  private static void displayResultSet(ResultSet R) throws SQLException
   {
 
    // Either put yu SQl in a try/catch block...or...

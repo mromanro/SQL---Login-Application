@@ -8,8 +8,6 @@ package javafxapplication4;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,9 +37,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button submitButton, unlockButton;
     
-    private OracleJdbc database;
-    
-    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource() == submitButton) {
@@ -56,12 +51,10 @@ public class FXMLDocumentController implements Initializable {
     private void handleKeyPressed(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
             if(passwordField.isFocused()){
-                setMssg("Attempting Log In", false);
                 attemptLogin();
             }
             else{
                 passwordField.requestFocus();
-                setMssg("pressed enter", false);
             }
         }
     }
@@ -69,7 +62,6 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mssgLabel.setVisible(false);
-        database = new OracleJdbc();
     }    
     
     private void openUnlockGUI() {
@@ -92,12 +84,16 @@ public class FXMLDocumentController implements Initializable {
         String username = usernameField.getText();
         String password = passwordField.getText();
         
-        if(username.isEmpty())
+        if(username.isEmpty()) {
             setMssg("Type in Username", true);
-        else if(password.isEmpty())
+        }
+        else if(password.isEmpty()) {
             setMssg("Type in Password", true);
-        else
-            database.validateLogin(username, password);
+        }
+        else {
+            setMssg("Attempting Log In", false);
+            OracleJdbc.validateLogin(username, password);
+        }
     }
     
     private void setMssg(String mssg , boolean error) {

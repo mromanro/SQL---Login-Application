@@ -31,8 +31,6 @@ public class UnlockGUIFXMLController implements Initializable {
     @FXML
     private TextField accountUserField, adminUserField, adminPassField;
     
-    private OracleJdbc database;
-    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource() == submitButton) {
@@ -42,7 +40,6 @@ public class UnlockGUIFXMLController implements Initializable {
     
     @FXML
     private void handleKeyPressed(KeyEvent event) {
-        System.out.println("Fired");
         if(event.getCode() == KeyCode.ENTER) {
             if(adminUserField.isFocused())
                 adminPassField.requestFocus();
@@ -59,7 +56,6 @@ public class UnlockGUIFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mssgLabel.setVisible(false);
-        database = new OracleJdbc();
     }    
     
     private void unlock() {
@@ -78,7 +74,7 @@ public class UnlockGUIFXMLController implements Initializable {
         }
         else {
             setMssg("Attempting Unlock", false);
-            boolean unlocked = database.unlockAccount(adminUsername, 
+            boolean unlocked = OracleJdbc.unlockAccount(adminUsername, 
                                             adminPassword, accountUsername);
             if(unlocked)
                 setMssg("Account Unlocked", false);
