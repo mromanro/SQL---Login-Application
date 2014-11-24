@@ -65,7 +65,7 @@ public class FXMLDocumentController implements Initializable {
     }    
     
     private void openUnlockGUI() {
-        setMssg("Unlocking" , false);
+        mssgLabel.setVisible(false);
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UnlockGUIFXML.fxml"));
         Parent root;
@@ -92,9 +92,19 @@ public class FXMLDocumentController implements Initializable {
         }
         else {
             setMssg("Attempting Log In", false);
-            OracleJdbc.validateLogin(username, password);
+            if(OracleJdbc.checkLock(username)) {
+                setMssg("Account is Locked", true);
+            }
+            else if(OracleJdbc.validateLogin(username, password)) {
+                setMssg("Successful Log In", false);
+            }
+            else {
+                setMssg("Failed to Log In", true);
+            }
         }
     }
+    
+    
     
     private void setMssg(String mssg , boolean error) {
         if(error){
