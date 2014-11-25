@@ -93,7 +93,6 @@ public class OracleJdbcTest {
         assertEquals(expResult, result);
         System.out.println("Check Lock Test Passed");
     }
-
     
     /**
     * Test that an account locks
