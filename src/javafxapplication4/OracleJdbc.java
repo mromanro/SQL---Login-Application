@@ -17,8 +17,7 @@ import java.util.Properties;
  * @author MacAir
  */
 public class OracleJdbc {
-    
-    public static boolean DEBUG = true;
+
     private final static String URL = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
     private static Connection conn;
     
@@ -38,10 +37,12 @@ public class OracleJdbc {
             
             if(set != null) {
                 set.next();
-                if(set.getString("LOCKED_YN").equals("Y"))
+                if(set.getString("LOCKED_YN").equals("Y")){
                     locked = true;
-                else
+                }
+                else {
                     locked = false;
+                }
             }
             
             disconnect();
@@ -71,10 +72,12 @@ public class OracleJdbc {
             ResultSet set = preStatement.executeQuery();
             if(set != null) {
                 set.next();
-                if(set.getString("SUCCESS_YN").equals("Y"))
+                if(set.getString("SUCCESS_YN").equals("Y")) {
                     success = true;
-                else
+                }
+                else {
                     success =false;
+                }
                 
                 set.close();
             }
@@ -100,10 +103,8 @@ public class OracleJdbc {
                                     + "VALUES('" + accountUsername + "', '" + adminUsername + "', '" + adminPassword
                                     + "')";
        
-            System.out.println(sql);
             PreparedStatement preStatement = conn.prepareStatement(sql);
             preStatement.executeQuery();
-            System.out.println("After");
             
             sql = "SELECT DISTINCT UNLOCK_SUCCESS_YN FROM Unlocking WHERE USERNAME_TO_UNLOCK"
                     + " = '" + accountUsername +"' AND ADMIN_USERNAME = '"
@@ -141,11 +142,7 @@ public class OracleJdbc {
     private static void connect() throws SQLException{
         Properties props = new Properties();
         props.setProperty("user", "Team4_Tuesday_Task");
-        props.setProperty("password", "Team4");
-        
-        if(DEBUG) System.out.println(" DEBUG url=" + URL);
-        if(DEBUG) System.out.println(" DEBUG Usernamre=" + props.getProperty("user") );
-        if(DEBUG) System.out.println(" DEBUG Password=" + props.getProperty("password") );    
+        props.setProperty("password", "Team4");  
         
         //creating connection to Oracle database using JDBC
         conn = DriverManager.getConnection(URL,props);

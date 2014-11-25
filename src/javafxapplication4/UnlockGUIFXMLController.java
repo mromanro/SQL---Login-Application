@@ -41,12 +41,15 @@ public class UnlockGUIFXMLController implements Initializable {
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER) {
-            if(adminUserField.isFocused())
+            if(adminUserField.isFocused()) {
                 adminPassField.requestFocus();
-            else if(adminPassField.isFocused())
+            }
+            else if(adminPassField.isFocused()) {
                 accountUserField.requestFocus();
-            else
+            }
+            else {
                 unlock();
+            }
         }
     }
    
@@ -76,18 +79,22 @@ public class UnlockGUIFXMLController implements Initializable {
             setMssg("Attempting Unlock", false);
             boolean unlocked = OracleJdbc.unlockAccount(adminUsername, 
                                             adminPassword, accountUsername);
-            if(unlocked)
+            if(unlocked) {
                 setMssg("Account Unlocked", false);
-            else
+            }
+            else {
                 setMssg("Failure to unlock", true);
+            }
         }
     }
     
     private void setMssg(String mssg, boolean error) {
-        if(error)
+        if(error) {
             mssgLabel.setTextFill(Color.RED);
-        else
+        }
+        else {
             mssgLabel.setTextFill(Color.BLUE);
+        }
         
         mssgLabel.setText(mssg);
         mssgLabel.setVisible(true);

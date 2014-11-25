@@ -110,7 +110,8 @@ public class FXMLDocumentController implements Initializable {
         if(error){
             mssgLabel.setTextFill(Color.RED);
             
-        } else {
+        } 
+        else {
             mssgLabel.setTextFill(Color.BLUE);
         }
         
