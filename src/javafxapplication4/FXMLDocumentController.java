@@ -23,8 +23,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- *
- * @author MacAir
+ * Controller class for the FXMLDocument.fxml GUI.
+ * It is used to control the main display.
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -37,6 +37,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button submitButton, unlockButton;
     
+    /**
+     * Handles the click of buttons
+     * 
+     * @param event The button clicked
+     */
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource() == submitButton) {
@@ -47,6 +52,11 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    /**
+     * Handles the key pressed
+     * 
+     * @param event The key pressed
+     */
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
@@ -59,11 +69,20 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    /**
+     * Initializes the GUI
+     * 
+     * @param url   Not used
+     * @param rb    Not used
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mssgLabel.setVisible(false);
     }    
     
+    /**
+     * Used to open a second window for the purpose of unlocking accounts
+     */
     private void openUnlockGUI() {
         mssgLabel.setVisible(false);
         
@@ -80,6 +99,10 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    /**
+     * Attempts to log in to the database.
+     * Uses username and password that is typed on the textfields.
+     */
     private void attemptLogin(){
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -104,8 +127,14 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    
-    
+    /**
+     * Sets a message on the GUI.
+     * Requires a boolean value so to change the color of the message
+     * to indicate an error or not.
+     * 
+     * @param mssg  The message to display
+     * @param error Whether the display is an error or not
+     */
     private void setMssg(String mssg , boolean error) {
         if(error){
             mssgLabel.setTextFill(Color.RED);

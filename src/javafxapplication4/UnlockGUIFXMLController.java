@@ -18,9 +18,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 /**
- * FXML Controller class
+ * FXML Controller for the UnlockGUIFXML.fxml GUI.
  *
- * @author MacAir
  */
 public class UnlockGUIFXMLController implements Initializable {
 
@@ -31,6 +30,11 @@ public class UnlockGUIFXMLController implements Initializable {
     @FXML
     private TextField accountUserField, adminUserField, adminPassField;
     
+    /**
+     * Handles the click of a button
+     * 
+     * @param event The button clicked
+     */
     @FXML
     private void handleButtonAction(ActionEvent event) {
         if(event.getSource() == submitButton) {
@@ -38,6 +42,11 @@ public class UnlockGUIFXMLController implements Initializable {
         }
     }
     
+    /**
+     * Handles the press of a key
+     * 
+     * @param event The key pressed
+     */
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER) {
@@ -55,12 +64,20 @@ public class UnlockGUIFXMLController implements Initializable {
    
     /**
      * Initializes the controller class.
+     * 
+     * @param url   not used
+     * @param rb    not used
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mssgLabel.setVisible(false);
     }    
     
+    /**
+     * Method used to unlock an account.
+     * Gets the administrator username, password, and account to unlock
+     * username from the textfields.
+     */
     private void unlock() {
         String adminUsername = adminUserField.getText();
         String adminPassword = adminPassField.getText();
@@ -88,6 +105,14 @@ public class UnlockGUIFXMLController implements Initializable {
         }
     }
     
+    /**
+     * Sets a message on the GUI.
+     * Requires a boolean value so to change the color of the message
+     * to indicate an error or not.
+     * 
+     * @param mssg  The message to display
+     * @param error Whether the display is an error or not
+     */
     private void setMssg(String mssg, boolean error) {
         if(error) {
             mssgLabel.setTextFill(Color.RED);

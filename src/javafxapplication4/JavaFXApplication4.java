@@ -12,11 +12,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author MacAir
+ *  Main class
  */
 public class JavaFXApplication4 extends Application {
     
+    /**
+     * Start method for JavaFX application
+     * 
+     * @param stage     The stage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -28,6 +33,8 @@ public class JavaFXApplication4 extends Application {
     }
 
     /**
+     * Main method
+     * 
      * @param args the command line arguments
      */
     public static void main(String[] args) {

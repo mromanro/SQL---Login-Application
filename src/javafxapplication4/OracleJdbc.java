@@ -13,16 +13,24 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- *
- * @author MacAir
+ *  Class that connects to the Team4 database.
  */
 public class OracleJdbc {
 
     private final static String URL = "jdbc:oracle:thin:@cncsidb01.msudenver.edu:1521:DB01";
     private static Connection conn;
     
+    /**
+    * Private Constructor
+    */
     private OracleJdbc() {}
     
+    /**
+     * Checks if a given username is locked out in database.
+     * 
+     * @param username  The username of account to check
+     * @return          True if the account is locked, false otherwise.
+     */
     public static boolean checkLock(String username) {
         boolean locked = false;
         
@@ -53,6 +61,13 @@ public class OracleJdbc {
         return locked;
     }
     
+    /**
+     * Method that tries to log in with the given username and password.
+     * 
+     * @param username  The username of account
+     * @param password  The password of account
+     * @return          True if it was a successful log in, false otherwise.
+     */
     public static boolean validateLogin(String username, String password) {   
         boolean success = false;
         
@@ -92,9 +107,23 @@ public class OracleJdbc {
         return success;
     }
     
+    /**
+     * Method used to unlock an account. Requires an administrator account 
+     * along with the username of the account to unlock. An administrator 
+     * cannot unlock itself.
+     * 
+     * @param adminUsername     The Username of the administrator
+     * @param adminPassword     The Password of the administrator
+     * @param accountUsername   The Username of the account to unlock
+     * @return                  True if the account was unlocked, false otherwise.
+     */
     public static boolean unlockAccount(String adminUsername, String adminPassword,
                                     String accountUsername) {
         boolean success = false;
+        
+        if(adminUsername.equals(accountUsername)) {
+            return success;
+        }
         
         try{
             connect();
@@ -132,13 +161,22 @@ public class OracleJdbc {
         return success;
     }
     
+    /**
+     * Private method used to disconnect from database.
+     * 
+     * @throws SQLException 
+     */
     private static void disconnect() throws SQLException{
         if(conn != null) {
             conn.close();
         }
     }
     
-    
+    /**
+     * Private method used to connect to database
+     * 
+     * @throws SQLException 
+     */
     private static void connect() throws SQLException{
         Properties props = new Properties();
         props.setProperty("user", "Team4_Tuesday_Task");
